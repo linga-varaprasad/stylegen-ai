@@ -1,24 +1,33 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 
 const onboardingSteps = [
   {
-    title: "Welcome to StyleGen AI",
+    title: "StyleGen AI",
     description: "Your personal AI-powered fashion assistant",
-    image: "https://source.unsplash.com/800x600/?fashion,technology",
+    image: "/lovable-uploads/9805de9e-0c7b-4f7b-933a-e35200da30a9.png",
+    bgColor: "bg-[#FF4141]",
   },
   {
     title: "3D Body Scanning",
     description: "Get accurate measurements with our advanced scanning technology",
     image: "https://source.unsplash.com/800x600/?3d,scanning",
+    bgColor: "bg-primary",
   },
   {
     title: "Virtual Try-On",
     description: "Try clothes virtually with AR technology",
     image: "https://source.unsplash.com/800x600/?virtual,reality",
+    bgColor: "bg-accent",
   },
 ];
 
@@ -26,70 +35,103 @@ const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const navigate = useNavigate();
 
-  const nextStep = () => {
-    if (currentStep === onboardingSteps.length - 1) {
-      navigate("/");
-    } else {
-      setCurrentStep((prev) => prev + 1);
-    }
-  };
-
-  const prevStep = () => {
-    setCurrentStep((prev) => prev - 1);
+  const handleComplete = () => {
+    navigate("/");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-gradient-from to-primary-gradient-to flex items-center justify-center p-4">
-      <Card className="w-full max-w-lg bg-white/90 backdrop-blur">
-        <div className="relative overflow-hidden">
-          <img
-            src={onboardingSteps[currentStep].image}
-            alt={onboardingSteps[currentStep].title}
-            className="w-full h-64 object-cover"
-          />
-          <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-            <h1 className="text-3xl font-bold text-white">
-              {onboardingSteps[currentStep].title}
-            </h1>
+    <div className="min-h-screen flex items-center justify-center">
+      <Carousel
+        className="w-full max-w-md"
+        onSelect={(index) => setCurrentStep(index)}
+      >
+        <CarouselContent>
+          {onboardingSteps.map((step, index) => (
+            <CarouselItem key={index}>
+              <div
+                className={cn(
+                  "rounded-3xl overflow-hidden transition-all duration-500",
+                  step.bgColor
+                )}
+              >
+                <div className="p-8 min-h-[600px] flex flex-col">
+                  {/* Logo Section */}
+                  <div className="mb-8">
+                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto">
+                      <svg
+                        className="w-6 h-6 text-primary"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Title Section */}
+                  <div className="text-white mb-8">
+                    <h1 className="text-4xl font-bold mb-4">{step.title}</h1>
+                    <p className="text-lg opacity-90">{step.description}</p>
+                  </div>
+
+                  {/* Image Section */}
+                  <div className="flex-grow flex items-end justify-center">
+                    <img
+                      src={step.image}
+                      alt={step.title}
+                      className="max-h-[300px] object-contain rounded-t-3xl"
+                    />
+                  </div>
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+
+        <div className="mt-4 flex flex-col items-center gap-4">
+          {/* Progress Indicators */}
+          <div className="flex gap-2 justify-center">
+            {onboardingSteps.map((_, index) => (
+              <div
+                key={index}
+                className={cn(
+                  "w-2 h-2 rounded-full transition-all duration-300",
+                  currentStep === index
+                    ? "bg-primary w-4"
+                    : "bg-gray-300"
+                )}
+              />
+            ))}
           </div>
-        </div>
-        <div className="p-6">
-          <p className="text-center text-gray-600 mb-8">
-            {onboardingSteps[currentStep].description}
-          </p>
-          <div className="flex justify-between items-center">
+
+          {/* Navigation Buttons */}
+          <div className="flex w-full justify-center gap-4">
             <Button
               variant="outline"
-              onClick={prevStep}
-              disabled={currentStep === 0}
-              className="w-24"
+              className="w-32"
+              onClick={handleComplete}
             >
-              <ChevronLeft className="mr-2" />
-              Back
+              Skip
             </Button>
-            <div className="flex gap-2">
-              {onboardingSteps.map((_, index) => (
-                <div
-                  key={index}
-                  className={`w-2 h-2 rounded-full ${
-                    index === currentStep ? "bg-primary" : "bg-gray-300"
-                  }`}
-                />
-              ))}
-            </div>
-            <Button onClick={nextStep} className="w-24">
-              {currentStep === onboardingSteps.length - 1 ? (
-                "Start"
-              ) : (
-                <>
-                  Next
-                  <ChevronRight className="ml-2" />
-                </>
-              )}
+            <Button
+              className="w-32"
+              onClick={
+                currentStep === onboardingSteps.length - 1
+                  ? handleComplete
+                  : () => setCurrentStep(currentStep + 1)
+              }
+            >
+              {currentStep === onboardingSteps.length - 1 ? "Get Started" : "Next"}
             </Button>
           </div>
         </div>
-      </Card>
+      </Carousel>
     </div>
   );
 };
