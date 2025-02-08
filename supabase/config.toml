@@ -1,1 +1,14 @@
+
 project_id = "hhsynwxoejulkrotpiij"
+
+[functions.style-recommendations]
+verify_jwt = true
+
+[functions.scan-upload]
+verify_jwt = true
+
+[functions.tryon]
+verify_jwt = true
+
+[functions.shop]
+verify_jwt = true
