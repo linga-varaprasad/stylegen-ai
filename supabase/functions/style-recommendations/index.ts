@@ -37,8 +37,8 @@ serve(async (req) => {
 
     // Get previous recommendations to avoid duplicates
     const { data: previousRecommendations } = await supabase
-      .from('fashion_recommendations')
-      .select('outfit_data')
+      .from('outfit_suggestions')
+      .select('generated_outfit_data')
       .eq('user_id', user.id)
       .order('created_at', { ascending: false })
       .limit(5)
@@ -48,11 +48,10 @@ serve(async (req) => {
 
     // Store new recommendations
     const { data: storedRecommendation, error } = await supabase
-      .from('fashion_recommendations')
+      .from('outfit_suggestions')
       .insert({
         user_id: user.id,
-        outfit_data: newRecommendations,
-        status: 'generated'
+        generated_outfit_data: newRecommendations
       })
       .select()
       .single()
