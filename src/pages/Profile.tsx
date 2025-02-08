@@ -50,7 +50,7 @@ const Profile = () => {
 
           {/* Profile Cards */}
           <div className="space-y-4">
-            <Card className="p-4 hover:shadow-md transition-shadow bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 hover:shadow-md transition-shadow bg-white/80 backdrop-blur-sm transform hover:scale-[1.01] transition-all duration-200">
               <div className="flex items-center gap-4">
                 <Settings className="w-6 h-6 text-purple-500" />
                 <div className="flex-1">
@@ -61,7 +61,7 @@ const Profile = () => {
               </div>
             </Card>
             
-            <Card className="p-4 hover:shadow-md transition-shadow bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 hover:shadow-md transition-shadow bg-white/80 backdrop-blur-sm transform hover:scale-[1.01] transition-all duration-200">
               <div className="flex items-center gap-4">
                 <History className="w-6 h-6 text-pink-500" />
                 <div className="flex-1">
@@ -72,7 +72,7 @@ const Profile = () => {
               </div>
             </Card>
             
-            <Card className="p-4 hover:shadow-md transition-shadow bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 hover:shadow-md transition-shadow bg-white/80 backdrop-blur-sm transform hover:scale-[1.01] transition-all duration-200">
               <div className="flex items-center gap-4">
                 <CreditCard className="w-6 h-6 text-purple-500" />
                 <div className="flex-1">

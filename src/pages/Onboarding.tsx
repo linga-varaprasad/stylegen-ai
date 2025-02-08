@@ -3,139 +3,139 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
-import useEmblaCarousel from "embla-carousel-react";
-import { ArrowRight, ChevronRight } from "lucide-react";
+  Card,
+  CardContent,
+} from "@/components/ui/card";
+import { Camera, Sparkles, TrendingUp, UserCircle } from "lucide-react";
 
 const onboardingSteps = [
   {
     title: "Welcome to StyleGen AI",
-    description: "Experience the future of fashion with AI-powered styling and recommendations tailored just for you",
+    description: "Experience personalized fashion recommendations powered by AI",
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800&h=600",
-    gradient: "from-[#FF6B6B] to-[#FFE66D]",
+    icon: <Sparkles className="w-8 h-8 text-purple-500" />,
   },
   {
     title: "Smart Body Scanning",
-    description: "Get perfectly fitted clothes with our advanced 3D body scanning technology",
+    description: "Get your perfect fit with our advanced 3D scanning technology",
     image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800&h=600",
-    gradient: "from-[#4ECDC4] to-[#556270]",
+    icon: <Camera className="w-8 h-8 text-pink-500" />,
   },
   {
-    title: "AI-Powered Recommendations",
-    description: "Discover your perfect style with personalized recommendations powered by artificial intelligence",
+    title: "Trending Styles",
+    description: "Discover the latest fashion trends curated just for you",
     image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80&w=800&h=600",
-    gradient: "from-[#6C63FF] to-[#3F3D56]",
-  },
+    icon: <TrendingUp className="w-8 h-8 text-purple-500" />,
+  }
 ];
 
 const Onboarding = () => {
   const navigate = useNavigate();
-  const [emblaRef, emblaApi] = useEmblaCarousel();
   const [currentStep, setCurrentStep] = useState(0);
 
-  const handleComplete = () => {
-    navigate("/");
-  };
-
-  const handleStepChange = () => {
-    if (emblaApi) {
-      setCurrentStep(emblaApi.selectedScrollSnap());
+  const handleNext = () => {
+    if (currentStep < onboardingSteps.length - 1) {
+      setCurrentStep(prev => prev + 1);
+    } else {
+      navigate("/profile");
     }
   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <Carousel
-        className="w-full max-w-7xl mx-auto"
-        opts={{
-          align: "center",
-          loop: false,
-        }}
-        onSelect={handleStepChange}
-        ref={emblaRef}
-      >
-        <CarouselContent>
-          {onboardingSteps.map((step, index) => (
-            <CarouselItem key={index} className="p-1 md:p-4">
-              <div className={cn(
-                "rounded-[2rem] overflow-hidden bg-gradient-to-br shadow-xl",
-                step.gradient
-              )}>
-                <div className="min-h-[80vh] p-8 flex flex-col md:flex-row items-center gap-8">
-                  {/* Content Section */}
-                  <div className="flex-1 text-white space-y-6 animate-fade-up">
-                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-                      {step.title}
-                    </h1>
-                    <p className="text-lg md:text-xl opacity-90 max-w-md leading-relaxed">
-                      {step.description}
-                    </p>
-                    
-                    {index === onboardingSteps.length - 1 ? (
-                      <Button 
-                        size="lg"
-                        onClick={handleComplete}
-                        className="mt-8 bg-white text-black hover:bg-white/90"
-                      >
-                        Get Started <ArrowRight className="ml-2 w-4 h-4" />
-                      </Button>
-                    ) : (
-                      <Button 
-                        size="lg"
-                        onClick={() => emblaApi?.scrollNext()}
-                        className="mt-8 bg-white text-black hover:bg-white/90"
-                      >
-                        Next <ChevronRight className="ml-2 w-4 h-4" />
-                      </Button>
-                    )}
-                  </div>
+  const handleSkip = () => {
+    navigate("/profile");
+  };
 
-                  {/* Image Section */}
-                  <div className="flex-1 h-full">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
+      <div className="container mx-auto px-4 py-8 md:py-16">
+        <div className="max-w-4xl mx-auto">
+          {/* Progress Indicators */}
+          <div className="flex justify-center gap-2 mb-8">
+            {onboardingSteps.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentStep(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  currentStep === index ? "w-8 bg-purple-500" : "w-2 bg-purple-200"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Content */}
+          <Card className="bg-white/80 backdrop-blur-sm overflow-hidden">
+            <CardContent className="p-6 md:p-8">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                {/* Image Section */}
+                <div className="order-2 md:order-1">
+                  <div className="relative rounded-2xl overflow-hidden aspect-square md:aspect-video shadow-lg">
                     <img
-                      src={step.image}
-                      alt={step.title}
-                      className="w-full h-full object-cover rounded-2xl shadow-lg transform transition-transform duration-500 hover:scale-105"
+                      src={onboardingSteps[currentStep].image}
+                      alt={onboardingSteps[currentStep].title}
+                      className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-105"
                     />
+                    <div className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg">
+                      {onboardingSteps[currentStep].icon}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Text Content */}
+                <div className="order-1 md:order-2 text-center md:text-left">
+                  <div className="space-y-6">
+                    <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                      {onboardingSteps[currentStep].title}
+                    </h1>
+                    <p className="text-lg text-gray-600">
+                      {onboardingSteps[currentStep].description}
+                    </p>
+                    <div className="flex flex-col md:flex-row gap-4">
+                      <Button
+                        onClick={handleNext}
+                        className="w-full md:w-auto bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90"
+                      >
+                        {currentStep === onboardingSteps.length - 1 ? "Get Started" : "Next"}
+                      </Button>
+                      {currentStep < onboardingSteps.length - 1 && (
+                        <Button
+                          variant="outline"
+                          onClick={handleSkip}
+                          className="w-full md:w-auto"
+                        >
+                          Skip
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
+            </CardContent>
+          </Card>
 
-        {/* Progress Indicators */}
-        <div className="mt-8 flex justify-center gap-2">
-          {onboardingSteps.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => emblaApi?.scrollTo(index)}
-              className={cn(
-                "w-3 h-3 rounded-full transition-all duration-300",
-                currentStep === index
-                  ? "bg-primary w-8"
-                  : "bg-primary/20 hover:bg-primary/40"
-              )}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+          {/* Quick Actions */}
+          <div className="mt-8 grid grid-cols-2 gap-4">
+            <Button
+              onClick={() => navigate("/body-scan")}
+              className="h-20 bg-gradient-to-r from-purple-500 to-purple-600 hover:opacity-90"
+            >
+              <div className="flex flex-col items-center gap-2">
+                <Camera className="h-6 w-6" />
+                <span className="text-sm">Body Scan</span>
+              </div>
+            </Button>
+            <Button
+              onClick={() => navigate("/try-on")}
+              className="h-20 bg-gradient-to-r from-pink-500 to-pink-600 hover:opacity-90"
+            >
+              <div className="flex flex-col items-center gap-2">
+                <UserCircle className="h-6 w-6" />
+                <span className="text-sm">Try On</span>
+              </div>
+            </Button>
+          </div>
         </div>
-
-        {/* Skip Button */}
-        <div className="mt-4 flex justify-center">
-          <Button
-            variant="ghost"
-            onClick={handleComplete}
-            className="text-gray-600 hover:text-gray-900"
-          >
-            Skip
-          </Button>
-        </div>
-      </Carousel>
+      </div>
     </div>
   );
 };
