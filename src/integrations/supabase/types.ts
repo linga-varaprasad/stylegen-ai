@@ -50,6 +50,75 @@ export type Database = {
           },
         ]
       }
+      body_scans: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          id: string
+          measurements: Json | null
+          scan_image_url: string | null
+          status: Database["public"]["Enums"]["scan_status"] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          measurements?: Json | null
+          scan_image_url?: string | null
+          status?: Database["public"]["Enums"]["scan_status"] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          measurements?: Json | null
+          scan_image_url?: string | null
+          status?: Database["public"]["Enums"]["scan_status"] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          created_at: string
+          id: string
+          items: Json
+          payment_intent_id: string | null
+          shipping_address: Json | null
+          status: Database["public"]["Enums"]["payment_status"] | null
+          total_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          items: Json
+          payment_intent_id?: string | null
+          shipping_address?: Json | null
+          status?: Database["public"]["Enums"]["payment_status"] | null
+          total_amount: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          items?: Json
+          payment_intent_id?: string | null
+          shipping_address?: Json | null
+          status?: Database["public"]["Enums"]["payment_status"] | null
+          total_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       outfit_suggestions: {
         Row: {
           created_at: string
@@ -106,6 +175,60 @@ export type Database = {
         }
         Relationships: []
       }
+      shopping_cart: {
+        Row: {
+          created_at: string
+          id: string
+          price: number
+          product_id: string
+          quantity: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          price: number
+          product_id: string
+          quantity?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          price?: number
+          product_id?: string
+          quantity?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      style_recommendations: {
+        Row: {
+          created_at: string
+          feedback: Json | null
+          id: string
+          recommendations: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          feedback?: Json | null
+          id?: string
+          recommendations: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          feedback?: Json | null
+          id?: string
+          recommendations?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
       thrift_store_listings: {
         Row: {
           created_at: string
@@ -136,6 +259,36 @@ export type Database = {
           price?: number
           store_id?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      try_on_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          outfit_image_url: string
+          rendered_image_url: string | null
+          status: Database["public"]["Enums"]["try_on_status"] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          outfit_image_url: string
+          rendered_image_url?: string | null
+          status?: Database["public"]["Enums"]["try_on_status"] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          outfit_image_url?: string
+          rendered_image_url?: string | null
+          status?: Database["public"]["Enums"]["try_on_status"] | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -199,6 +352,9 @@ export type Database = {
         | "outerwear"
         | "shoes"
         | "accessories"
+      payment_status: "pending" | "completed" | "failed" | "refunded"
+      scan_status: "pending" | "processing" | "completed" | "failed"
+      try_on_status: "pending" | "rendering" | "completed" | "failed"
     }
     CompositeTypes: {
       [_ in never]: never
