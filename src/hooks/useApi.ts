@@ -33,15 +33,40 @@ export const useApi = () => {
     outfitImage: string,
     userAvatar: string
   ) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('User not authenticated');
+    
     return invokeFunction('try-on', {
       outfit_image: outfitImage,
-      user_avatar: userAvatar
+      user_id: user.id
     });
   }, [invokeFunction]);
+
+  const getSocialTrends = useCallback(async () => {
+    const { data, error } = await supabase
+      .from('social_trends')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data;
+  }, []);
+
+  const getProductRecommendations = useCallback(async () => {
+    const { data, error } = await supabase
+      .from('product_recommendations')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data;
+  }, []);
 
   return {
     bodyScan,
     getStyleRecommendations,
-    tryOnOutfit
+    tryOnOutfit,
+    getSocialTrends,
+    getProductRecommendations
   };
 };

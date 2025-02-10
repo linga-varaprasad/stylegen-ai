@@ -148,6 +148,72 @@ export type Database = {
           },
         ]
       }
+      outfit_tryons: {
+        Row: {
+          created_at: string | null
+          id: string
+          outfit_image: string
+          rendered_image: string | null
+          status: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          outfit_image: string
+          rendered_image?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          outfit_image?: string
+          rendered_image?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      product_recommendations: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          external_url: string | null
+          id: string
+          image_url: string | null
+          platform: string
+          price: number | null
+          product_name: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          external_url?: string | null
+          id?: string
+          image_url?: string | null
+          platform: string
+          price?: number | null
+          product_name: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          external_url?: string | null
+          id?: string
+          image_url?: string | null
+          platform?: string
+          price?: number | null
+          product_name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           auth_provider: string | null
@@ -202,6 +268,36 @@ export type Database = {
           quantity?: number
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      social_trends: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          engagement_count: number | null
+          id: string
+          image_url: string | null
+          platform: string
+          trend_title: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          engagement_count?: number | null
+          id?: string
+          image_url?: string | null
+          platform: string
+          trend_title: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          engagement_count?: number | null
+          id?: string
+          image_url?: string | null
+          platform?: string
+          trend_title?: string
         }
         Relationships: []
       }
