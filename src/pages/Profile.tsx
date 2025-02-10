@@ -1,5 +1,4 @@
-
-import { User, Settings, History, CreditCard, Camera, Shirt } from "lucide-react";
+import { User, Settings, History, CreditCard, Camera, Shirt, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +10,15 @@ const Profile = () => {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
       <div className="container mx-auto p-4 animate-fade-up">
         <div className="max-w-2xl mx-auto space-y-6">
+          {/* Home Button */}
+          <Button
+            onClick={() => navigate('/')}
+            className="mb-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90"
+          >
+            <Home className="mr-2 h-4 w-4" />
+            Go to Home
+          </Button>
+
           {/* Profile Header */}
           <Card className="p-6 bg-white/80 backdrop-blur-sm">
             <div className="flex flex-col md:flex-row items-center gap-4">
